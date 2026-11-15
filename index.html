@@ -7,197 +7,232 @@
 <meta name="description" content="Mila Winter: охидын өвлийн бараа. УБ хүргэлт үнэгүй.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#FFF8F4; --blush:#F9DDE3; --rose:#E8708F; --rose-d:#C9506F;
-  --plum:#3A1F3D; --ink:#2B1A2C; --muted:#7A6578; --line:#F0D9DF; --white:#fff; --ice:#EAF4FB;
-  --r:20px; --shadow:0 14px 40px rgba(90,40,70,.12);
+  --snow:#FBFDFF; --frost:#EEF4FB; --ice:#DCE9F6; --blush:#F9DDE6; --rose:#E8708F; --rose-d:#C9506F;
+  --plum:#3A1F3D; --night:#272148; --ink:#2B1A2C; --muted:#6F6680; --line:#E3E8F3; --white:#fff;
+  --r:28px; --shadow:0 18px 44px rgba(52,44,96,.12);
+  --sans:Nunito,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:Nunito,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;overflow-x:hidden}
+body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;overflow-x:hidden;
+  background:linear-gradient(180deg,var(--snow),var(--frost) 60%,#F6EEF4);}
 img{max-width:100%;display:block}
 a{color:inherit}
 .wrap{max-width:1160px;margin:0 auto;padding:0 16px}
 h1,h2,h3{font-family:"Playfair Display",Georgia,serif;line-height:1.15;margin:0}
 .ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font:800 15px Nunito,sans-serif;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
-.btn-rose{background:var(--rose);color:#fff;box-shadow:0 8px 22px rgba(232,112,143,.35)}
-.btn-rose:hover{background:var(--rose-d);transform:translateY(-1px)}
-.btn-ghost{background:#fff;color:var(--plum);border:1.5px solid var(--line)}
+
+/* ROUND ICON — used next to every piece of text */
+.ri{width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;flex:none;
+  background:radial-gradient(circle at 30% 25%,#fff,#FCE4EC 70%);color:var(--rose-d);
+  box-shadow:inset 0 0 0 1.5px rgba(232,112,143,.25),0 6px 14px rgba(232,112,143,.18)}
+.ri .ic{width:19px;height:19px}
+.ri.sm{width:28px;height:28px}.ri.sm .ic{width:15px;height:15px}
+.ri.lg{width:56px;height:56px}.ri.lg .ic{width:26px;height:26px}
+.ri.ice{background:radial-gradient(circle at 30% 25%,#fff,#DCEBF8 70%);color:#3C6A9C;box-shadow:inset 0 0 0 1.5px rgba(60,106,156,.2),0 6px 14px rgba(60,106,156,.15)}
+.ri.dark{background:rgba(255,255,255,.14);color:#FFD9E4;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.25)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;padding:13px 24px;font:800 15px var(--sans);cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
+.btn .bi{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.25)}
+.btn .bi .ic{width:15px;height:15px}
+.btn-rose{background:linear-gradient(135deg,#F08AA6,var(--rose) 50%,var(--rose-d));color:#fff;box-shadow:0 10px 24px rgba(232,112,143,.38)}
+.btn-rose:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(232,112,143,.45)}
+.btn-ghost{background:rgba(255,255,255,.85);color:var(--plum);border:1.5px solid var(--line)}
+.btn-ghost .bi{background:var(--blush);color:var(--rose-d)}
 .btn-ghost:hover{border-color:var(--rose)}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* announce */
-.announce{background:var(--plum);color:#F7E3EA;font-size:13px;font-weight:700}
+/* SNOW CANVAS (whole page) */
+#snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:45}
+
+/* ANNOUNCE + icicles */
+.announce{position:relative;background:var(--night);color:#F2E6F2;font-size:13px;font-weight:700;z-index:2}
 .announce .wrap{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;padding:8px 16px}
-.announce span{display:inline-flex;align-items:center;gap:6px}
-.announce .ic{width:16px;height:16px}
+.announce span{display:inline-flex;align-items:center;gap:8px}
+@media(max-width:600px){.announce .wrap{gap:4px 14px;font-size:12px;padding:6px 12px}.announce .hide-sm{display:none}}
+.icicles{position:absolute;left:0;right:0;top:100%;height:16px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 16'%3E%3Cpath d='M0 0h120v2l-4 2-3 10-3-10-6 1-2 5-2-5-8 1-3 12-3-12-7 0-2 6-2-6-9 1-3 9-3-9-8 0-2 4-2-4-9 1-3 11-3-11-6 0-2 5-2-5L0 2z' fill='%23272148'/%3E%3C/svg%3E") repeat-x;background-size:120px 16px}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:30;background:rgba(255,248,244,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:"Playfair Display",serif;font-size:24px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:8px;color:var(--plum)}
+/* NAV */
+.nav{position:sticky;top:0;z-index:30;background:rgba(251,253,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:"Playfair Display",serif;font-size:24px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--plum)}
 .logo i{font-style:italic;color:var(--rose)}
-.logo .ic{color:var(--rose);width:22px;height:22px}
-.nav-links{display:flex;gap:22px;font-weight:700;font-size:15px}
-.nav-links a{text-decoration:none;color:var(--muted)}
-.nav-links a:hover{color:var(--rose)}
-.cart-btn{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;display:flex;gap:8px;align-items:center;font:800 14px Nunito,system-ui,sans-serif;color:var(--plum);cursor:pointer}
+.nav-links{display:flex;gap:8px;font-weight:700;font-size:14px}
+.nav-links a{text-decoration:none;color:var(--muted);display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;transition:background .15s}
+.nav-links a:hover{background:#fff;color:var(--rose-d)}
+.cart-btn{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 14px 5px 5px;display:flex;gap:8px;align-items:center;font:800 14px var(--sans);color:var(--plum);cursor:pointer}
 .cart-btn b{background:var(--rose);color:#fff;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;padding:0 6px}
-@media(max-width:720px){.nav-links{display:none}}
+@media(max-width:820px){.nav-links{display:none}}
 
-/* hero */
-.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#FCE7EC 0%,var(--cream) 55%,var(--ice) 100%)}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:64px;padding-bottom:80px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose-d);background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:999px}
-.eyebrow .ic{width:15px;height:15px}
-.hero h1{font-size:clamp(36px,6vw,64px);color:var(--plum);margin:18px 0 14px}
-.hero h1 em{color:var(--rose);font-style:italic}
-.hero p.sub{font-size:18px;color:var(--muted);max-width:46ch;margin:0 0 26px}
+/* HERO — winter scene */
+.hero{position:relative;min-height:680px;display:flex;align-items:center;overflow:hidden;color:#fff;isolation:isolate}
+.scene{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero .wrap{width:100%;padding-top:56px;padding-bottom:150px}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,.26),rgba(255,255,255,.10));border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-radius:32px;box-shadow:0 24px 60px rgba(20,14,50,.25)}
+.hero-panel{max-width:560px;padding:34px;background:linear-gradient(145deg,rgba(60,44,110,.38),rgba(60,44,110,.16))}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose-d);background:#fff;padding:5px 14px 5px 5px;border-radius:999px;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.hero h1{font-size:clamp(38px,6vw,66px);margin:18px 0 14px;text-shadow:0 4px 24px rgba(30,20,70,.35)}
+.hero h1 em{color:#FFC9D8;font-style:italic}
+.hero p.sub{font-size:17.5px;color:#F6EEFA;margin:0 0 24px;max-width:44ch}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.hero-art{position:relative;aspect-ratio:1/1;border-radius:32px;background:radial-gradient(circle at 30% 30%,#fff,#F9DDE3 60%,#EBC7D2);box-shadow:var(--shadow);display:grid;place-items:center;overflow:hidden}
-.hero-art .big{width:46%;height:46%;color:var(--rose);stroke-width:1.2;opacity:.9}
-.hero-art .tag{position:absolute;background:#fff;border-radius:16px;padding:10px 14px;font-weight:800;font-size:14px;box-shadow:var(--shadow);display:flex;gap:8px;align-items:center;color:var(--plum)}
-.hero-art .tag .ic{color:var(--rose)}
-.hero-art .t1{top:12%;left:-2%}.hero-art .t2{bottom:14%;right:-2%}
-.hero-art .t1{left:6%}.hero-art .t2{right:6%}
-.flakes{position:absolute;inset:0;pointer-events:none}
-.flakes i{position:absolute;top:-10px;width:8px;height:8px;border-radius:50%;background:#fff;opacity:.9;animation:fall linear infinite}
-@keyframes fall{to{transform:translateY(110vh) translateX(30px)}}
-@media(prefers-reduced-motion:reduce){.flakes{display:none}}
-@media(max-width:820px){.hero .wrap{grid-template-columns:1fr;padding-top:40px;padding-bottom:56px}.hero-art{max-width:420px;width:100%;margin:0 auto}}
+.hero-feats{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.hero-feats span{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;color:#fff;background:rgba(40,30,80,.6);border:1px solid rgba(255,255,255,.28);padding:4px 14px 4px 4px;border-radius:999px}
+.temp{position:absolute;right:max(16px,calc((100% - 1160px)/2 + 16px));top:56px;display:flex;align-items:center;gap:12px;padding:10px 18px 10px 10px;border-radius:999px;font-weight:800}
+.temp small{display:block;font-weight:600;font-size:12px;opacity:.85}
+@media(max-width:820px){.hero{min-height:0}.hero .wrap{padding-top:96px;padding-bottom:120px}.hero-panel{padding:24px}.temp{top:20px;left:16px;right:auto}}
 
-/* perks */
-.perks{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.perks .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:22px 16px}
-.perk{display:flex;gap:12px;align-items:center}
-.perk .bub{width:44px;height:44px;border-radius:14px;background:var(--blush);color:var(--rose-d);display:grid;place-items:center;flex:none}
-.perk b{display:block;font-size:15px}
-.perk span{font-size:13px;color:var(--muted)}
-@media(max-width:820px){.perks .wrap{grid-template-columns:1fr 1fr}}
-@media(max-width:420px){.perks .wrap{grid-template-columns:1fr}}
+/* drift divider */
+.drift{display:block;width:100%;height:70px;margin-top:-69px;position:relative;z-index:1}
 
-/* sections */
-section.block{padding:72px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
-.sec-head h2{font-size:clamp(28px,4vw,40px);color:var(--plum)}
-.sec-head p{margin:6px 0 0;color:var(--muted)}
+/* PERKS */
+.perks{position:relative;z-index:2;margin-top:-40px}
+.perks .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.perk{display:flex;gap:12px;align-items:center;background:#fff;border-radius:999px;padding:10px 18px 10px 10px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.perk b{display:block;font-size:14.5px;line-height:1.3}
+.perk span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){.perks .grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.perks .grid4{grid-template-columns:1fr}}
 
-/* filters */
-.filters{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:700 14px Nunito,system-ui,sans-serif;color:var(--muted);cursor:pointer}
-.chip.on{background:var(--plum);border-color:var(--plum);color:#fff}
+/* SECTIONS */
+section.block{padding:80px 0;position:relative}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap}
+.sec-head.center{justify-content:center;text-align:center;flex-direction:column}
+.sec-head h2{font-size:clamp(28px,4vw,42px);color:var(--plum)}
+.sec-head p{margin:4px 0 0;color:var(--muted)}
 
-/* products */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+/* SNOW CAP on top edge of rounded boxes */
+.capped{position:relative}
+.capped::before{content:"";position:absolute;left:-3px;right:-3px;top:-7px;height:22px;z-index:3;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 22' preserveAspectRatio='none'%3E%3Cpath d='M14 6C40-1 70 3 96 4s50-5 80-2 52 4 84 0 30 1 34 6c4 6-1 8-6 9-6 2-9 0-14 5-3 3-8 2-9-2-1-5-10-4-20-3-18 1-24 3-30 3-6 0-6 7-10 7s-4-5-12-5c-30 0-60-2-90 0-8 0-9 4-13 4s-3-4-10-4C46 18 30 15 16 16 6 16 0 10 14 6z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat;background-size:100% 100%;
+  filter:drop-shadow(0 3px 3px rgba(60,80,130,.12))}
+
+/* PRODUCTS */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
-.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.card .media{aspect-ratio:1/1;background:linear-gradient(145deg,#FDF0F3,#EEF5FB);position:relative;display:grid;place-items:center;color:#D9A9B8}
+@media(max-width:540px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 22px rgba(52,44,96,.06)}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.card .media{aspect-ratio:1/1;margin:10px 10px 0;border-radius:22px;overflow:hidden;position:relative;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 30%,#fff,#EAF1FA 55%,#F7E3EB)}
 .card .media img{width:100%;height:100%;object-fit:cover}
-.card .media .ph{display:grid;place-items:center;gap:8px;text-align:center;font-weight:700;font-size:14px}
-.card .media .ph .ic{width:48px;height:48px;stroke-width:1.3}
-.badge{position:absolute;top:12px;left:12px;background:#fff;color:var(--rose-d);font-weight:800;font-size:12px;border-radius:999px;padding:4px 10px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.card .cat{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-d)}
+.card .media .ph{display:grid;justify-items:center;gap:10px;text-align:center;font-weight:700;font-size:14px;color:#9C93AE}
+.card .media .flk{position:absolute;color:#C9D9EC;opacity:.7}
+.badge{position:absolute;top:12px;left:12px;background:#fff;color:var(--rose-d);font-weight:800;font-size:12px;border-radius:999px;padding:4px 12px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card .cat{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--rose-d)}
 .card h3{font-size:20px;color:var(--plum)}
 .card .desc{font-size:14px;color:var(--muted);margin:0}
 .card .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px;gap:10px}
-.price{font-weight:800;font-size:19px;color:var(--plum)}
-.price s{font-weight:600;font-size:14px;color:#B79AAE;margin-left:6px}
-.card.soon .price{color:#B79AAE;font-size:15px}
-.card .btn{padding:10px 16px;font-size:14px}
+.price{font-weight:800;font-size:19px;color:var(--plum);display:flex;align-items:center;gap:8px}
+.price s{font-weight:600;font-size:14px;color:#A99CB8}
+.card.soon .price{color:#A99CB8;font-size:14.5px}
+.card .btn{padding:7px 16px 7px 7px;font-size:14px}
 
-/* categories */
-.cats{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-@media(max-width:720px){.cats{grid-template-columns:1fr}}
-.catbox{border-radius:28px;padding:34px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;position:relative;overflow:hidden}
-.catbox.w{background:linear-gradient(140deg,#DCEBF7,#F3F8FC);color:#1E3550}
-.catbox.g{background:linear-gradient(140deg,#F8D3DD,#FDEEF2);color:var(--plum)}
-.catbox h3{font-size:30px}
-.catbox p{margin:6px 0 0;opacity:.8;max-width:32ch}
-.catbox .ic.deco{position:absolute;right:-10px;bottom:-10px;width:170px;height:170px;opacity:.18;stroke-width:1}
-.catbox .btn{align-self:flex-start}
+/* WHY */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+@media(max-width:900px){.why{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.why{grid-template-columns:1fr}}
+.why .item{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;text-align:center;display:grid;justify-items:center;gap:10px}
+.why h3{font-size:19px;color:var(--plum)}
+.why p{margin:0;color:var(--muted);font-size:14.5px}
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+/* COZY BAND */
+.cozy{background:linear-gradient(160deg,#2C2554,#4A3470 60%,#7A4A80);color:#fff;overflow:hidden}
+.cozy .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.cozy h2{color:#fff}
+.cozy p{color:#E8DDF2}
+.cozy ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
+.cozy li{display:flex;align-items:center;gap:12px;font-weight:700}
+.window{border-radius:36px;overflow:hidden;border:10px solid rgba(255,255,255,.12);box-shadow:0 30px 60px rgba(0,0,0,.3)}
+.window svg{display:block;width:100%;height:auto}
+@media(max-width:820px){.cozy .wrap{grid-template-columns:1fr}}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 @media(max-width:820px){.steps{grid-template-columns:1fr}}
-.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px}
-.step .n{font:800 13px Nunito,system-ui,sans-serif;color:var(--rose-d);letter-spacing:.08em}
-.step h3{font-size:21px;margin:8px 0 6px;color:var(--plum)}
+.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;display:grid;gap:10px}
+.step .top{display:flex;align-items:center;gap:12px}
+.step .num{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--plum);color:#fff;font-weight:800}
+.step .n{font:800 12.5px var(--sans);color:var(--rose-d);letter-spacing:.08em}
+.step h3{font-size:21px;color:var(--plum)}
 .step p{margin:0;color:var(--muted);font-size:15px}
 
-/* faq */
-.faq{max-width:760px;margin:0 auto;display:grid;gap:12px}
-.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px}
-.faq summary{font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;color:var(--plum)}
+/* FAQ */
+.faq{max-width:780px;margin:0 auto;display:grid;gap:14px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:24px;padding:12px 18px 12px 12px}
+.faq summary{font-weight:800;cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;color:var(--plum)}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:var(--rose);font-size:22px;line-height:1}
+.faq summary .t{flex:1}
+.faq summary::after{content:"+";width:30px;height:30px;border-radius:50%;background:var(--frost);color:var(--rose-d);display:grid;place-items:center;font-size:18px;flex:none}
 .faq details[open] summary::after{content:"–"}
-.faq p{margin:10px 0 0;color:var(--muted)}
+.faq p{margin:10px 0 4px 52px;color:var(--muted)}
 
-/* footer */
-footer{background:var(--plum);color:#E9D6E0;padding:48px 0 32px}
+/* FOOTER */
+footer{position:relative;background:var(--night);color:#E4DAEC;padding:30px 0 34px;margin-top:70px}
+footer .hills{position:absolute;left:0;right:0;bottom:100%;width:100%;height:70px;display:block}
 footer .wrap{display:grid;gap:18px}
 footer .logo{color:#fff}
-.fc{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
-.fc span{display:inline-flex;gap:8px;align-items:center}
-.fc .ic{width:16px;height:16px;color:#F3A9BE}
+.fc{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.fc span{display:inline-flex;gap:10px;align-items:center}
 footer small{opacity:.6}
 
-/* drawer + modal */
-.overlay{position:fixed;inset:0;background:rgba(43,26,44,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+/* DRAWER + MODAL */
+.overlay{position:fixed;inset:0;background:rgba(39,33,72,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 .overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--cream);z-index:60;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+.drawer{position:fixed;top:10px;right:10px;bottom:10px;width:min(420px,calc(100% - 20px));background:var(--snow);z-index:60;transform:translateX(110%);transition:transform .25s ease;display:flex;flex-direction:column;border-radius:30px;overflow:hidden}
 .drawer.open{transform:none}
 .dr-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
-.dr-head h3{font-size:22px;color:var(--plum)}
-.x{background:#fff;border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;color:var(--plum)}
+.dr-head h3{font-size:22px;color:var(--plum);display:flex;align-items:center;gap:10px}
+.x{background:#fff;border:1px solid var(--line);border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--plum)}
 .dr-body{flex:1;overflow:auto;padding:16px 20px;display:grid;gap:12px;align-content:start}
-.line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
-.line .th{width:56px;height:56px;border-radius:10px;background:var(--blush);overflow:hidden;display:grid;place-items:center;color:var(--rose)}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:10px}
+.line .th{width:56px;height:56px;border-radius:50%;background:var(--blush);overflow:hidden;display:grid;place-items:center;color:var(--rose)}
 .line .th img{width:100%;height:100%;object-fit:cover}
 .line b{display:block;font-size:15px;color:var(--plum)}
 .line small{color:var(--muted)}
 .qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800;color:var(--plum)}
-.empty{text-align:center;color:var(--muted);padding:40px 0}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800;color:var(--plum)}
+.empty{text-align:center;color:var(--muted);padding:40px 0;display:grid;justify-items:center;gap:12px}
 .dr-foot{padding:16px 20px;border-top:1px solid var(--line);display:grid;gap:10px}
-.sumrow{display:flex;justify-content:space-between;font-size:15px}
+.sumrow{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px}
+.sumrow .l{display:flex;align-items:center;gap:8px}
 .sumrow.total{font-weight:800;font-size:18px;color:var(--plum)}
 
 .modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
 .modal.open{opacity:1;pointer-events:auto}
-.mcard{background:var(--cream);border-radius:24px;width:min(480px,100%);max-height:92vh;overflow:auto;padding:24px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.mcard{background:var(--snow);border-radius:32px;width:min(480px,100%);max-height:92vh;overflow:auto;padding:26px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
 .mcard .x{position:absolute;top:16px;right:16px}
-.mcard h3{font-size:24px;color:var(--plum);margin-bottom:14px}
+.mcard h3{font-size:24px;color:var(--plum);margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .field{display:grid;gap:6px;margin-bottom:12px}
-.field label{font-weight:800;font-size:14px}
-.field input,.field textarea,.field select{font:15px Nunito,system-ui,sans-serif;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--ink);width:100%}
-.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--rose)}
+.field label{font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px}
+.field input,.field textarea,.field select{font:15px var(--sans);padding:12px 16px;border-radius:18px;border:1.5px solid var(--line);background:#fff;color:var(--ink);width:100%}
+.field input,.field select{border-radius:999px}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 4px rgba(232,112,143,.15)}
 .field textarea{min-height:76px;resize:vertical}
 .hint{font-size:12px;color:var(--muted)}
-.osum{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px;display:grid;gap:4px}
-.osum .sumrow.total{font-size:16px;border-top:1px dashed var(--line);padding-top:6px;margin-top:4px}
+.osum{background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px 16px;margin-bottom:14px;font-size:14px;display:grid;gap:6px}
+.osum .sumrow.total{font-size:16px;border-top:1px dashed var(--line);padding-top:8px;margin-top:2px}
 .err{color:#B3261E;font-size:14px;display:none}
-.bank{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;margin:14px 0;font-size:14px}
-.bank code{font:800 15px Nunito,system-ui,sans-serif;color:var(--plum)}
+.bank{background:#fff;border:1px solid var(--line);border-radius:24px;padding:16px;display:grid;gap:10px;margin:14px 0;font-size:14px}
+.bank code{font:800 15px var(--sans);color:var(--plum)}
 .bank-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.copy{border:1px solid var(--line);background:var(--cream);border-radius:999px;padding:4px 10px;font:700 12px Nunito,system-ui,sans-serif;cursor:pointer}
-.fbtext{width:100%;font:13px Nunito,system-ui,sans-serif;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.copy{border:1px solid var(--line);background:var(--frost);border-radius:999px;padding:5px 12px;font:700 12px var(--sans);cursor:pointer}
+.fbtext{width:100%;font:13px var(--sans);border:1px solid var(--line);border-radius:18px;padding:12px;background:#fff}
 .bot{position:absolute;left:-9999px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--plum);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;z-index:80;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--plum);color:#fff;padding:8px 18px 8px 8px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;z-index:80;pointer-events:none;display:flex;align-items:center;gap:10px}
 .toast.show{opacity:1;transform:translateX(-50%)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M4.9 6.5l14.2 11M19.1 6.5 4.9 17.5M9 4l3 2 3-2M9 20l3-2 3 2"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17M9 3.5l3 2 3-2M9 20.5l3-2 3 2M3.6 10.5l2.6-1.6-.2-3M20.4 13.5l-2.6 1.6.2 3M20.4 10.5l-2.6-1.6.2-3M3.6 13.5l2.6 1.6-.2 3"/></symbol>
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9-9a4.8 4.8 0 0 1 9-3 4.8 4.8 0 0 1 9 3c-2 4.6-9 9-9 9z"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
     <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
@@ -208,107 +243,246 @@ footer small{opacity:.6}
     <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3-5-1s3 1 5 1zm0 0c1.5-3 5-3 5-1s-3 1-5 1z"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="5"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/></symbol>
+    <symbol id="i-mitten" viewBox="0 0 24 24"><path d="M8 21h8v-3l2.5-4.5a2 2 0 0 0-3.4-2L14 13V7a4 4 0 0 0-8 0v7l2 4z"/><path d="M8 18h8"/></symbol>
+    <symbol id="i-scarf" viewBox="0 0 24 24"><path d="M6 4c4 2 8 2 12 0v5c-4 2-8 2-12 0zM8 10v10l3-2 1 3V11"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM16 11h2a2.5 2.5 0 0 1 0 5h-2M8 3c-1 1.5 1 2.5 0 4M12 3c-1 1.5 1 2.5 0 4"/></symbol>
+    <symbol id="i-therm" viewBox="0 0 24 24"><path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/><path d="M12 9v7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-4 3.6-6 7-6s6.2 2 7 6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.2 9.4l6.1-.8z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+    <symbol id="tree" viewBox="0 0 100 160"><rect x="45" y="128" width="10" height="30" rx="3" fill="#4A3440"/>
+      <path d="M50 4 70 40H60L82 74H68L94 116H6l26-42H18l22-34H30z" fill="#2F4A5E"/>
+      <path d="M50 4 64 30c-6-3-10 2-14-1-4 3-8-2-14 1zM40 40h20l6 10c-6-3-9 3-16 0-6 3-11-2-16 0zM32 74h36l8 13c-8-4-12 3-26 0-12 3-18-4-26 0zM18 116h64l12-0c-10 4-20 6-44 4-20 2-30 0-38-4z" fill="#fff"/>
+      <path d="M28 82c8-2 14 3 22 1M40 46c6-1 8 2 12 1" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
-<div class="announce"><div class="wrap">
-  <span><svg class="ic"><use href="#i-truck"/></svg>УБ хүргэлт үнэгүй</span>
-  <span><svg class="ic"><use href="#i-pin"/></svg>Хөдөө орон нутаг +₮40,000</span>
-  <span><svg class="ic"><use href="#i-bank"/></svg>Хаан банкаар шилжүүлэх</span>
-</div></div>
+<canvas id="snow" aria-hidden="true"></canvas>
+
+<div class="announce">
+  <div class="wrap">
+    <span><span class="ri sm dark"><svg class="ic"><use href="#i-truck"/></svg></span>УБ хүргэлт үнэгүй</span>
+    <span><span class="ri sm dark"><svg class="ic"><use href="#i-pin"/></svg></span>Хөдөө орон нутаг +₮40,000</span>
+    <span class="hide-sm"><span class="ri sm dark"><svg class="ic"><use href="#i-bank"/></svg></span>Хаан банкаар шилжүүлэх</span>
+  </div>
+  <div class="icicles" aria-hidden="true"></div>
+</div>
 
 <header class="nav"><div class="wrap">
-  <a href="#" class="logo"><svg class="ic"><use href="#i-snow"/></svg>Mila <i>Winter</i></a>
+  <a href="#" class="logo"><span class="ri"><svg class="ic"><use href="#i-snow"/></svg></span>Mila <i>Winter</i></a>
   <nav class="nav-links">
-    <a href="#shop">Бүтээгдэхүүн</a>
-    <a href="#how">Захиалах заавар</a>
-    <a href="#faq">Асуулт</a>
+    <a href="#shop"><span class="ri sm"><svg class="ic"><use href="#i-bag"/></svg></span>Бүтээгдэхүүн</a>
+    <a href="#why"><span class="ri sm"><svg class="ic"><use href="#i-heart"/></svg></span>Яагаад бид</a>
+    <a href="#how"><span class="ri sm"><svg class="ic"><use href="#i-note"/></svg></span>Захиалах</a>
+    <a href="#faq"><span class="ri sm"><svg class="ic"><use href="#i-chat"/></svg></span>Асуулт</a>
   </nav>
-  <button class="cart-btn" id="cartOpen" type="button" aria-label="Сагс"><svg class="ic"><use href="#i-bag"/></svg>Сагс <b id="cartCount">0</b></button>
+  <button class="cart-btn" id="cartOpen" type="button" aria-label="Сагс"><span class="ri sm"><svg class="ic"><use href="#i-bag"/></svg></span>Сагс <b id="cartCount">0</b></button>
 </div></header>
 
 <main>
+  <!-- HERO: illustrated winter evening -->
   <section class="hero">
-    <div class="flakes" id="flakes" aria-hidden="true"></div>
+    <svg class="scene" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1F1B44"/><stop offset=".38" stop-color="#4B3A7A"/>
+          <stop offset=".68" stop-color="#B07AA6"/><stop offset=".86" stop-color="#F2B9C4"/><stop offset="1" stop-color="#FCE1D8"/>
+        </linearGradient>
+        <radialGradient id="moonGlow"><stop offset="0" stop-color="#FFF6E9" stop-opacity=".9"/><stop offset=".35" stop-color="#FFE9EF" stop-opacity=".35"/><stop offset="1" stop-color="#FFE9EF" stop-opacity="0"/></radialGradient>
+        <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9E92C9"/><stop offset="1" stop-color="#C9B6D8"/></linearGradient>
+        <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7E2F4"/><stop offset="1" stop-color="#CFC6E6"/></linearGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E4ECF8"/></linearGradient>
+        <radialGradient id="warm"><stop offset="0" stop-color="#FFD27A" stop-opacity=".85"/><stop offset="1" stop-color="#FFB45A" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="1440" height="720" fill="url(#sky)"/>
+      <g fill="#fff">
+        <circle cx="120" cy="60" r="1.6" opacity=".9"/><circle cx="260" cy="130" r="1.2" opacity=".7"/><circle cx="420" cy="40" r="1.4" opacity=".8"/>
+        <circle cx="610" cy="110" r="1" opacity=".6"/><circle cx="760" cy="50" r="1.6" opacity=".9"/><circle cx="880" cy="150" r="1.1" opacity=".6"/>
+        <circle cx="980" cy="70" r="1.3" opacity=".8"/><circle cx="1320" cy="60" r="1.5" opacity=".8"/><circle cx="1390" cy="170" r="1" opacity=".6"/>
+        <circle cx="560" cy="200" r="1" opacity=".5"/><circle cx="340" cy="230" r="1.1" opacity=".5"/><circle cx="1260" cy="230" r="1" opacity=".5"/>
+      </g>
+      <circle cx="1130" cy="170" r="150" fill="url(#moonGlow)"/>
+      <circle cx="1130" cy="170" r="46" fill="#FFF7EC"/>
+      <circle cx="1116" cy="160" r="8" fill="#F3E6DA" opacity=".7"/><circle cx="1146" cy="186" r="5" fill="#F3E6DA" opacity=".6"/>
+      <!-- far mountains with snow caps -->
+      <path d="M0 470 160 330 250 400 380 270 520 410 640 320 790 430 930 300 1060 400 1200 290 1330 380 1440 330V720H0z" fill="url(#far)"/>
+      <path d="M380 270 342 306l20-6 18 14 16-16 22 10zM930 300l-36 32 22-6 14 10 16-14 20 8zM1200 290l-34 30 20-4 14 10 16-14 18 6zM160 330l-28 26 16-2 12 8 14-10 16 4z" fill="#fff" opacity=".95"/>
+      <!-- mid hills -->
+      <path d="M0 520C160 450 300 470 440 500S760 430 920 470s320 10 520-40V720H0z" fill="url(#mid)"/>
+      <!-- distant trees -->
+      <g opacity=".75">
+        <use href="#tree" x="70" y="430" width="40" height="64"/><use href="#tree" x="110" y="440" width="32" height="52"/>
+        <use href="#tree" x="1240" y="410" width="44" height="70"/><use href="#tree" x="1290" y="424" width="34" height="56"/><use href="#tree" x="1330" y="414" width="40" height="64"/>
+        <use href="#tree" x="820" y="440" width="34" height="54"/>
+      </g>
+      <!-- cozy cabin with warm light -->
+      <g transform="translate(980 470)">
+        <circle cx="60" cy="58" r="90" fill="url(#warm)"/>
+        <rect x="10" y="40" width="100" height="62" rx="6" fill="#6B3F57"/>
+        <path d="M0 44 60 2l60 42z" fill="#4A2B3E"/>
+        <path d="M-4 46c10-6 18 0 28-4 12-6 18 2 30-4 10-4 20 2 30-2 12-4 22 4 36 2l-4-6L60-4 0 40z" fill="#fff"/>
+        <rect x="78" y="-2" width="12" height="22" rx="2" fill="#4A2B3E"/><rect x="76" y="-6" width="16" height="6" rx="3" fill="#fff"/>
+        <rect x="24" y="56" width="26" height="22" rx="5" fill="#FFCF7A"/><path d="M37 56v22M24 67h26" stroke="#6B3F57" stroke-width="2.5"/>
+        <rect x="66" y="62" width="22" height="40" rx="5" fill="#4A2B3E"/>
+      </g>
+      <!-- foreground snow + big trees -->
+      <path d="M0 590C200 540 380 560 560 590S900 620 1080 580s260-20 360 0V720H0z" fill="url(#ground)"/>
+      <use href="#tree" x="1180" y="400" width="120" height="192"/>
+      <use href="#tree" x="1300" y="450" width="90" height="144"/>
+      <use href="#tree" x="840" y="470" width="80" height="128"/>
+      <use href="#tree" x="-20" y="470" width="90" height="144"/>
+      <g fill="#fff"><circle cx="300" cy="640" r="2"/><circle cx="520" cy="660" r="1.6"/><circle cx="760" cy="630" r="2.2"/><circle cx="1010" cy="660" r="1.6"/><circle cx="1240" cy="640" r="2"/></g>
+      <g fill="#C9D8EE" opacity=".6"><ellipse cx="420" cy="690" rx="140" ry="10"/><ellipse cx="1100" cy="700" rx="180" ry="12"/></g>
+    </svg>
+
+    <div class="temp glass" aria-hidden="true"><span class="ri dark"><svg class="ic"><use href="#i-therm"/></svg></span><div>−24°C<small>Улаанбаатар · өвөл</small></div></div>
+
     <div class="wrap">
-      <div>
-        <span class="eyebrow"><svg class="ic"><use href="#i-sparkle"/></svg>Охидын өвлийн цуглуулга</span>
+      <div class="hero-panel glass">
+        <span class="eyebrow"><span class="ri sm"><svg class="ic"><use href="#i-sparkle"/></svg></span>Охидын өвлийн цуглуулга</span>
         <h1>Өвөл ч <em>гоё</em>,<br>дулаахан ч байя</h1>
-        <p class="sub">Охидод зориулсан өвлийн дулаан, гоё бараа нэг дороос. Сонгоод сагсандаа хийгээд захиалаарай.</p>
+        <p class="sub">−30 градусын хүйтэнд ч дулаан, гоё харагдах охидын өвлийн бараа. Малгай, ороолт, бээлий, гэрийн тав тухтай зүйлс нэг дороос.</p>
         <div class="hero-ctas">
-          <a href="#shop" class="btn btn-rose">Дэлгүүр үзэх <svg class="ic"><use href="#i-arrow"/></svg></a>
-          <a href="#how" class="btn btn-ghost">Яаж захиалах вэ?</a>
+          <a href="#shop" class="btn btn-rose">Дэлгүүр үзэх <span class="bi"><svg class="ic"><use href="#i-arrow"/></svg></span></a>
+          <a href="#how" class="btn btn-ghost"><span class="bi"><svg class="ic"><use href="#i-note"/></svg></span>Яаж захиалах вэ?</a>
         </div>
-      </div>
-      <div class="hero-art">
-        <svg class="ic big" aria-hidden="true"><use href="#i-snow"/></svg>
-        <div class="tag t1"><svg class="ic"><use href="#i-heart"/></svg>Охидод зориулсан</div>
-        <div class="tag t2"><svg class="ic"><use href="#i-gift"/></svg>Бэлэгт тохиромжтой</div>
+        <div class="hero-feats">
+          <span><span class="ri sm"><svg class="ic"><use href="#i-heart"/></svg></span>Охидод зориулсан</span>
+          <span><span class="ri sm"><svg class="ic"><use href="#i-gift"/></svg></span>Бэлэгт тохиромжтой</span>
+          <span><span class="ri sm"><svg class="ic"><use href="#i-snow"/></svg></span>Хүйтэнд дулаан</span>
+        </div>
       </div>
     </div>
   </section>
+  <svg class="drift" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40C120 10 260 50 400 30S700 0 860 26s300 30 420 6c80-14 130-10 160 0V70H0z" fill="#FBFDFF"/></svg>
 
-  <div class="perks"><div class="wrap">
-    <div class="perk"><span class="bub"><svg class="ic"><use href="#i-truck"/></svg></span><div><b>УБ хүргэлт үнэгүй</b><span>Хот дотор</span></div></div>
-    <div class="perk"><span class="bub"><svg class="ic"><use href="#i-pin"/></svg></span><div><b>Хөдөө орон нутаг</b><span>+₮40,000 хүргэлт</span></div></div>
-    <div class="perk"><span class="bub"><svg class="ic"><use href="#i-bank"/></svg></span><div><b>Дансаар төлөх</b><span>Хаан банк</span></div></div>
-    <div class="perk"><span class="bub"><svg class="ic"><use href="#i-gift"/></svg></span><div><b>Бэлэгт тохиромжтой</b><span>Шинэ жил, Зул сар</span></div></div>
+  <!-- PERKS -->
+  <div class="perks"><div class="wrap grid4">
+    <div class="perk"><span class="ri"><svg class="ic"><use href="#i-truck"/></svg></span><div><b>УБ хүргэлт үнэгүй</b><span>Хот дотор</span></div></div>
+    <div class="perk"><span class="ri ice"><svg class="ic"><use href="#i-pin"/></svg></span><div><b>Хөдөө орон нутаг</b><span>+₮40,000 хүргэлт</span></div></div>
+    <div class="perk"><span class="ri"><svg class="ic"><use href="#i-bank"/></svg></span><div><b>Дансаар төлөх</b><span>Хаан банк</span></div></div>
+    <div class="perk"><span class="ri ice"><svg class="ic"><use href="#i-gift"/></svg></span><div><b>Бэлэгт тохиромжтой</b><span>Шинэ жил, Зул сар</span></div></div>
   </div></div>
 
+  <!-- PRODUCTS -->
   <section class="block" id="shop">
     <div class="wrap">
       <div class="sec-head">
+        <span class="ri lg"><svg class="ic"><use href="#i-bag"/></svg></span>
         <div><h2>Бүтээгдэхүүн</h2><p>Шинэ бараа удахгүй нэмэгдэнэ.</p></div>
       </div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
 
-  <section class="block" id="how" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <!-- WHY -->
+  <section class="block" id="why" style="padding-top:20px">
     <div class="wrap">
-      <div class="sec-head"><div><h2>3 алхамаар захиална</h2></div></div>
-      <div class="steps">
-        <div class="step"><span class="n">АЛХАМ 1</span><h3>Сагсандаа хийнэ</h3><p>Таалагдсан бараагаа сонгоод "Сагсанд" товчийг дарна.</p></div>
-        <div class="step"><span class="n">АЛХАМ 2</span><h3>Мэдээллээ бөглөнө</h3><p>Нэр, утас, хаягаа бичээд захиалгаа илгээнэ.</p></div>
-        <div class="step"><span class="n">АЛХАМ 3</span><h3>Төлөөд хүлээн авна</h3><p>Хаан банкаар бүрэн төлж, гүйлгээний зургаа илгээнэ. Бид хүргэж өгнө.</p></div>
+      <div class="sec-head center"><span class="ri lg ice"><svg class="ic"><use href="#i-snow"/></svg></span><div><h2>Яагаад Mila Winter?</h2><p>Монголын хүйтэн өвөлд зориулж сонгосон.</p></div></div>
+      <div class="why">
+        <div class="item capped"><span class="ri lg"><svg class="ic"><use href="#i-therm"/></svg></span><h3>Жинхэнэ дулаан</h3><p>Монголын хатуу өвөлд тохирох бараа сонгоно.</p></div>
+        <div class="item capped"><span class="ri lg ice"><svg class="ic"><use href="#i-heart"/></svg></span><h3>Охидод зориулсан</h3><p>Өнгө, загвар нь гоё, өдөр бүр өмсөхөд таатай.</p></div>
+        <div class="item capped"><span class="ri lg"><svg class="ic"><use href="#i-gift"/></svg></span><h3>Бэлэгт бэлэн</h3><p>Найз, ээж, эгч дүүдээ өгөх гоё бэлэг.</p></div>
+        <div class="item capped"><span class="ri lg ice"><svg class="ic"><use href="#i-truck"/></svg></span><h3>Гэрт хүргэнэ</h3><p>УБ хотод үнэгүй, хөдөө орон нутаг руу ч илгээнэ.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="block" id="faq">
+  <!-- COZY BAND -->
+  <section class="block cozy">
     <div class="wrap">
-      <div class="sec-head" style="justify-content:center;text-align:center"><div><h2>Түгээмэл асуулт</h2></div></div>
+      <div class="window" aria-hidden="true">
+        <svg viewBox="0 0 600 420">
+          <defs>
+            <linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D1A40"/><stop offset="1" stop-color="#5C4A8A"/></linearGradient>
+            <radialGradient id="lamp"><stop offset="0" stop-color="#FFD58A" stop-opacity=".9"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="600" height="420" fill="url(#nsky)"/>
+          <circle cx="470" cy="90" r="28" fill="#FFF6EA"/>
+          <path d="M0 300c90-40 180-30 300-10s210 10 300-20v150H0z" fill="#E9EEF8"/>
+          <use href="#tree" x="40" y="180" width="90" height="144"/><use href="#tree" x="120" y="220" width="60" height="96"/>
+          <use href="#tree" x="460" y="200" width="80" height="128"/>
+          <g fill="#fff" opacity=".9"><circle cx="80" cy="60" r="3"/><circle cx="200" cy="120" r="2.4"/><circle cx="320" cy="50" r="3.2"/><circle cx="390" cy="160" r="2"/><circle cx="540" cy="190" r="2.6"/><circle cx="260" cy="210" r="2.2"/><circle cx="150" cy="30" r="2"/></g>
+          <!-- window frame + frost -->
+          <rect x="0" y="0" width="600" height="420" fill="none" stroke="#F4ECF5" stroke-width="18"/>
+          <path d="M300 0v420M0 210h600" stroke="#F4ECF5" stroke-width="12"/>
+          <path d="M0 0c40 10 60 30 70 70M0 420c40-10 60-30 80-70M600 0c-40 10-60 30-70 70M600 420c-40-10-60-30-80-70" stroke="#fff" stroke-width="2" fill="none" opacity=".5"/>
+          <!-- warm mug on the sill -->
+          <circle cx="300" cy="390" r="120" fill="url(#lamp)"/>
+          <rect x="250" y="340" width="70" height="60" rx="16" fill="#E8708F"/>
+          <path d="M320 355c22 0 22 30 0 30" stroke="#E8708F" stroke-width="9" fill="none"/>
+          <path d="M270 330c-8-12 8-16 0-30M295 330c-8-12 8-16 0-30" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".8"/>
+          <path d="M0 400h600v20H0z" fill="#F4ECF5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sec-head" style="margin-bottom:10px"><span class="ri lg dark"><svg class="ic"><use href="#i-cup"/></svg></span><h2>Гадаа цас, дотор дулаахан</h2></div>
+        <p>Цонхны цаана цас орж, гадаа −25 хэм. Харин чи дулаахан ороолтоо ороож, халуун цайгаа ууж байна. Mila Winter яг ийм мэдрэмжийг чамд өгөхийг хүсдэг.</p>
+        <ul>
+          <li><span class="ri dark"><svg class="ic"><use href="#i-mitten"/></svg></span>Гараа даарахаас хамгаална</li>
+          <li><span class="ri dark"><svg class="ic"><use href="#i-scarf"/></svg></span>Хүзүү, чихээ дулаан байлгана</li>
+          <li><span class="ri dark"><svg class="ic"><use href="#i-home"/></svg></span>Гэртээ ч тав тухтай байна</li>
+          <li><span class="ri dark"><svg class="ic"><use href="#i-sparkle"/></svg></span>Хүйтэнд ч гоё харагдана</li>
+        </ul>
+        <a href="#shop" class="btn btn-rose" style="margin-top:24px">Бараа үзэх <span class="bi"><svg class="ic"><use href="#i-arrow"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="sec-head center"><span class="ri lg"><svg class="ic"><use href="#i-note"/></svg></span><div><h2>3 алхамаар захиална</h2></div></div>
+      <div class="steps">
+        <div class="step capped"><div class="top"><span class="num">1</span><span class="ri"><svg class="ic"><use href="#i-bag"/></svg></span><span class="n">АЛХАМ 1</span></div><h3>Сагсандаа хийнэ</h3><p>Таалагдсан бараагаа сонгоод "Сагсанд" товчийг дарна.</p></div>
+        <div class="step capped"><div class="top"><span class="num">2</span><span class="ri ice"><svg class="ic"><use href="#i-user"/></svg></span><span class="n">АЛХАМ 2</span></div><h3>Мэдээллээ бөглөнө</h3><p>Нэр, утас, хаягаа бичээд захиалгаа илгээнэ.</p></div>
+        <div class="step capped"><div class="top"><span class="num">3</span><span class="ri"><svg class="ic"><use href="#i-bank"/></svg></span><span class="n">АЛХАМ 3</span></div><h3>Төлөөд хүлээн авна</h3><p>Хаан банкаар бүрэн төлж, гүйлгээний зургаа илгээнэ. Бид хүргэж өгнө.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block" id="faq" style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-head center"><span class="ri lg ice"><svg class="ic"><use href="#i-chat"/></svg></span><div><h2>Түгээмэл асуулт</h2></div></div>
       <div class="faq">
-        <details open><summary>Хүргэлт хэрхэн явагдах вэ?</summary><p>Улаанбаатар хотод хүргэлт үнэгүй. Хөдөө орон нутагт хүргэлтийн төлбөр ₮40,000.</p></details>
-        <details><summary>Төлбөрөө яаж төлөх вэ?</summary><p>Хаан банкны данс руу бүтэн дүнгээр урьдчилж шилжүүлнэ. Шилжүүлсний дараа гүйлгээний зургаа илгээж захиалгаа баталгаажуулна. Хэсэгчилсэн төлбөр авахгүй.</p></details>
-        <details><summary>Хэд хоногт ирэх вэ?</summary><p>Захиалга баталгаажсаны дараа бид утсаар холбогдож хүргэх хугацааг хэлнэ.</p></details>
-        <details><summary>Бэлэг болгож авч болох уу?</summary><p>Болно. Захиалгын "Нэмэлт мэдээлэл" хэсэгт бэлэг гэж бичээрэй.</p></details>
+        <details open><summary><span class="ri"><svg class="ic"><use href="#i-truck"/></svg></span><span class="t">Хүргэлт хэрхэн явагдах вэ?</span></summary><p>Улаанбаатар хотод хүргэлт үнэгүй. Хөдөө орон нутагт хүргэлтийн төлбөр ₮40,000.</p></details>
+        <details><summary><span class="ri ice"><svg class="ic"><use href="#i-bank"/></svg></span><span class="t">Төлбөрөө яаж төлөх вэ?</span></summary><p>Хаан банкны данс руу бүтэн дүнгээр урьдчилж шилжүүлнэ. Шилжүүлсний дараа гүйлгээний зургаа илгээж захиалгаа баталгаажуулна. Хэсэгчилсэн төлбөр авахгүй.</p></details>
+        <details><summary><span class="ri"><svg class="ic"><use href="#i-clock"/></svg></span><span class="t">Хэд хоногт ирэх вэ?</span></summary><p>Захиалга баталгаажсаны дараа бид утсаар холбогдож хүргэх хугацааг хэлнэ.</p></details>
+        <details><summary><span class="ri ice"><svg class="ic"><use href="#i-gift"/></svg></span><span class="t">Бэлэг болгож авч болох уу?</span></summary><p>Болно. Захиалгын "Нэмэлт мэдээлэл" хэсэгт бэлэг гэж бичээрэй.</p></details>
       </div>
     </div>
   </section>
 </main>
 
-<footer><div class="wrap">
-  <a href="#" class="logo"><svg class="ic"><use href="#i-snow"/></svg>Mila <i>Winter</i></a>
-  <div class="fc">
-    <span><svg class="ic"><use href="#i-phone"/></svg><a href="tel:85544078">8554 4078</a></span>
-    <span><svg class="ic"><use href="#i-heart"/></svg>Facebook / Instagram: Mila Winter</span>
-    <span><svg class="ic"><use href="#i-truck"/></svg>Зөвхөн хүргэлтээр</span>
+<footer>
+  <svg class="hills" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V40C140 10 300 30 460 44S760 10 940 30s320 34 500 0V70z" fill="#272148"/><path d="M0 44C140 14 300 34 460 48S760 14 940 34s320 34 500 0V40C1260 74 1120 30 940 26S640 40 460 38 140 6 0 38z" fill="#fff"/></svg>
+  <div class="wrap">
+    <a href="#" class="logo"><span class="ri dark"><svg class="ic"><use href="#i-snow"/></svg></span>Mila <i>Winter</i></a>
+    <div class="fc">
+      <span><span class="ri sm dark"><svg class="ic"><use href="#i-phone"/></svg></span><a href="tel:85544078">8554 4078</a></span>
+      <span><span class="ri sm dark"><svg class="ic"><use href="#i-heart"/></svg></span>Facebook / Instagram: Mila Winter</span>
+      <span><span class="ri sm dark"><svg class="ic"><use href="#i-truck"/></svg></span>Зөвхөн хүргэлтээр</span>
+    </div>
+    <small>© 2026 Mila Winter. Бүх эрх хуулиар хамгаалагдсан.</small>
   </div>
-  <small>© 2026 Mila Winter. Бүх эрх хуулиар хамгаалагдсан.</small>
-</div></footer>
+</footer>
 
 <!-- CART DRAWER -->
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer" aria-label="Сагс">
-  <div class="dr-head"><h3>Таны сагс</h3><button class="x" id="cartClose" type="button" aria-label="Хаах"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="dr-head"><h3><span class="ri"><svg class="ic"><use href="#i-bag"/></svg></span>Таны сагс</h3><button class="x" id="cartClose" type="button" aria-label="Хаах"><svg class="ic"><use href="#i-x"/></svg></button></div>
   <div class="dr-body" id="cartBody"></div>
   <div class="dr-foot">
-    <div class="sumrow"><span>Барааны дүн</span><b id="subTotal">₮0</b></div>
-    <div class="sumrow"><span>Хүргэлт</span><span>Хаягаас хамаарна</span></div>
-    <button class="btn btn-rose" id="checkoutBtn" type="button">Захиалах <svg class="ic"><use href="#i-arrow"/></svg></button>
+    <div class="sumrow"><span class="l"><span class="ri sm"><svg class="ic"><use href="#i-bag"/></svg></span>Барааны дүн</span><b id="subTotal">₮0</b></div>
+    <div class="sumrow"><span class="l"><span class="ri sm ice"><svg class="ic"><use href="#i-truck"/></svg></span>Хүргэлт</span><span>Хаягаас хамаарна</span></div>
+    <button class="btn btn-rose" id="checkoutBtn" type="button">Захиалах <span class="bi"><svg class="ic"><use href="#i-arrow"/></svg></span></button>
   </div>
 </aside>
 
@@ -317,30 +491,30 @@ footer small{opacity:.6}
   <div class="mcard">
     <button class="x js-close" type="button" aria-label="Хаах"><svg class="ic"><use href="#i-x"/></svg></button>
     <div id="formView">
-      <h3 id="mTitle">Захиалга өгөх</h3>
+      <h3 id="mTitle"><span class="ri"><svg class="ic"><use href="#i-note"/></svg></span>Захиалга өгөх</h3>
       <div class="osum" id="osum"></div>
       <form id="orderForm" method="POST" action="https://formspree.io/f/FORMSPREE_ID">
         <input type="hidden" name="_subject" value="Шинэ захиалга — Mila Winter">
         <input type="hidden" name="items" id="fItems">
         <input type="hidden" name="total" id="fTotal">
         <label class="bot">Бүү бөглө <input name="_gotcha" tabindex="-1" autocomplete="off"></label>
-        <div class="field"><label for="f-name">Нэр</label><input id="f-name" name="name" required autocomplete="name" placeholder="Таны нэр"></div>
-        <div class="field"><label for="f-phone">Утасны дугаар</label><input id="f-phone" name="phone" type="tel" inputmode="tel" required pattern="[0-9\s\-]{8,12}" title="8 оронтой утасны дугаар" placeholder="9999 9999"></div>
-        <div class="field"><label for="f-area">Хүргэлт</label>
+        <div class="field"><label for="f-name"><span class="ri sm"><svg class="ic"><use href="#i-user"/></svg></span>Нэр</label><input id="f-name" name="name" required autocomplete="name" placeholder="Таны нэр"></div>
+        <div class="field"><label for="f-phone"><span class="ri sm"><svg class="ic"><use href="#i-phone"/></svg></span>Утасны дугаар</label><input id="f-phone" name="phone" type="tel" inputmode="tel" required pattern="[0-9\s\-]{8,12}" title="8 оронтой утасны дугаар" placeholder="9999 9999"></div>
+        <div class="field"><label for="f-area"><span class="ri sm"><svg class="ic"><use href="#i-truck"/></svg></span>Хүргэлт</label>
           <select id="f-area" name="delivery"><option value="ub">Улаанбаатар (үнэгүй)</option><option value="rural">Хөдөө орон нутаг (+₮40,000)</option></select></div>
-        <div class="field"><label for="f-addr">Хаяг</label><textarea id="f-addr" name="address" required placeholder="Дүүрэг, хороо, байр, тоот / аймаг, сум"></textarea></div>
-        <div class="field"><label for="f-notes">Нэмэлт мэдээлэл <span class="hint">(заавал биш)</span></label><textarea id="f-notes" name="notes" placeholder="Жишээ: бэлэг, өнгө, хэмжээ"></textarea></div>
+        <div class="field"><label for="f-addr"><span class="ri sm"><svg class="ic"><use href="#i-pin"/></svg></span>Хаяг</label><textarea id="f-addr" name="address" required placeholder="Дүүрэг, хороо, байр, тоот / аймаг, сум"></textarea></div>
+        <div class="field"><label for="f-notes"><span class="ri sm"><svg class="ic"><use href="#i-chat"/></svg></span>Нэмэлт мэдээлэл <span class="hint">(заавал биш)</span></label><textarea id="f-notes" name="notes" placeholder="Жишээ: бэлэг, өнгө, хэмжээ"></textarea></div>
         <p class="err" id="err">Алдаа гарлаа. Дахин оролдоно уу эсвэл 8554 4078 дугаарт залгана уу.</p>
-        <button class="btn btn-rose" style="width:100%" type="submit">Захиалга илгээх <svg class="ic"><use href="#i-arrow"/></svg></button>
+        <button class="btn btn-rose" style="width:100%" type="submit">Захиалга илгээх <span class="bi"><svg class="ic"><use href="#i-arrow"/></svg></span></button>
         <p class="hint" style="text-align:center;margin-top:10px">Төлбөрийг бүтэн дүнгээр урьдчилж төлнө.</p>
       </form>
     </div>
     <div id="doneView" hidden>
-      <h3 id="dTitle">Захиалга амжилттай!</h3>
+      <h3 id="dTitle"><span class="ri"><svg class="ic"><use href="#i-check"/></svg></span>Захиалга амжилттай!</h3>
       <p id="dMsg" style="color:var(--muted);margin:0">Бид удахгүй утсаар холбогдоно. Төлбөрөө доорх данс руу шилжүүлээд гүйлгээний зургаа илгээнэ үү.</p>
       <div id="fbWrap" hidden style="margin-top:12px"><textarea class="fbtext" id="fbText" rows="7" readonly aria-label="Захиалгын мэдээлэл"></textarea><button class="copy js-copy" data-src="fbText" type="button" style="margin-top:6px">Хуулах</button></div>
       <div class="bank">
-        <b>Хаан банк</b>
+        <b style="display:flex;align-items:center;gap:8px"><span class="ri sm"><svg class="ic"><use href="#i-bank"/></svg></span>Хаан банк</b>
         <div class="bank-row"><span>Данс (IBAN)</span><code>1900500 5622699142</code><button class="copy js-copy" data-copy="1900500 5622699142" type="button">Хуулах</button></div>
         <div class="bank-row"><span>Хүлээн авагч</span><code>Батзориг Төгсбаяр</code></div>
         <div class="bank-row"><span>Дүн</span><code id="dTotal">₮0</code></div>
@@ -351,7 +525,7 @@ footer small{opacity:.6}
   </div>
 </div>
 
-<div class="toast" id="toast">Сагсанд нэмэгдлээ</div>
+<div class="toast" id="toast"><span class="ri sm"><svg class="ic"><use href="#i-check"/></svg></span>Сагсанд нэмэгдлээ</div>
 
 <script>
 /* =========================================================
@@ -362,12 +536,12 @@ footer small{opacity:.6}
    name хоосон бол "Удахгүй" карт харагдана.
    ========================================================= */
 var PRODUCTS = [
-  {id:"p1", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
-  {id:"p2", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
-  {id:"p3", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
-  {id:"p4", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
-  {id:"p5", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
-  {id:"p6", cat:"girls",  name:"", price:0, old:0, img:"", desc:""}
+  {id:"p1", cat:"girls", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p2", cat:"girls", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p3", cat:"girls", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p4", cat:"girls", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p5", cat:"girls", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p6", cat:"girls", name:"", price:0, old:0, img:"", desc:""}
 ];
 var RURAL_FEE = 40000;
 
@@ -378,11 +552,22 @@ var RURAL_FEE = 40000;
   var ready = function(p){ return p.name && p.price > 0; };
   var byId = function(id){ for (var i=0;i<PRODUCTS.length;i++) if (PRODUCTS[i].id===id) return PRODUCTS[i]; };
 
-  /* snow */
-  var fl = document.getElementById("flakes");
-  for (var i=0;i<26;i++){ var f=document.createElement("i"); var s=3+Math.random()*7;
-    f.style.cssText="left:"+(Math.random()*100)+"%;width:"+s+"px;height:"+s+"px;opacity:"+(.4+Math.random()*.5)+";animation-duration:"+(8+Math.random()*10)+"s;animation-delay:-"+(Math.random()*18)+"s";
-    fl.appendChild(f); }
+  /* realistic snowfall: 3 depth layers, soft bokeh flakes in front, gentle wind */
+  var cv=document.getElementById("snow"), reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(cv&&cv.getContext&&!reduce){
+    var cx=cv.getContext("2d"),W=0,H=0,F=[],t0=0;
+    var mk=function(top){var z=Math.random();return{x:Math.random()*W,y:top?-10:Math.random()*H,z:z,r:.8+z*z*3.6,vy:.25+z*1.1,ph:Math.random()*6.3,sw:.3+z*.8,a:.35+z*.55};};
+    var size=function(){var d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+      var n=Math.round(Math.min(110,Math.max(40,W*H/14000)));while(F.length<n)F.push(mk(false));F.length=n;};
+    var step=function(t){var wind=Math.sin(t*.0003)*.4;cx.clearRect(0,0,W,H);
+      for(var i=0;i<F.length;i++){var f=F[i];f.ph+=.01;f.x+=Math.sin(f.ph)*f.sw*.4+wind*(.3+f.z);f.y+=f.vy;
+        if(f.y>H+12){var n=mk(true);f.x=n.x;f.y=n.y;} if(f.x>W+12)f.x=-12; else if(f.x<-12)f.x=W+12;
+        var g=cx.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r*(f.z>.85?2.4:1.4));
+        g.addColorStop(0,"rgba(255,255,255,"+f.a+")");g.addColorStop(.55,"rgba(240,246,255,"+(f.a*.6)+")");g.addColorStop(1,"rgba(220,232,250,0)");
+        cx.fillStyle=g;cx.beginPath();cx.arc(f.x,f.y,f.r*(f.z>.85?2.4:1.4),0,6.2832);cx.fill();}
+      requestAnimationFrame(step);};
+    size();addEventListener("resize",size);requestAnimationFrame(step);
+  }
 
   /* products */
   var grid = document.getElementById("grid"), filter = "all";
@@ -390,15 +575,15 @@ var RURAL_FEE = 40000;
     grid.innerHTML = PRODUCTS.filter(function(p){ return filter==="all" || p.cat===filter; }).map(function(p){
       var ok = ready(p);
       var media = p.img ? '<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" loading="lazy">'
-        : '<div class="ph"><svg class="ic"><use href="#i-image"/></svg>Зураг удахгүй</div>';
+        : '<svg class="ic flk" style="top:14px;right:16px;width:22px;height:22px"><use href="#i-snow"/></svg><svg class="ic flk" style="bottom:18px;left:18px;width:16px;height:16px"><use href="#i-snow"/></svg><div class="ph"><span class="ri lg ice"><svg class="ic"><use href="#i-image"/></svg></span>Зураг удахгүй</div>';
       var off = ok && p.old > p.price ? Math.round((1-p.price/p.old)*100) : 0;
-      return '<article class="card'+(ok?'':' soon')+'">'+
+      return '<article class="card capped'+(ok?'':' soon')+'">'+
         '<div class="media">'+media+(off?'<span class="badge">−'+off+'%</span>':'')+'</div>'+
-        '<div class="body"><span class="cat">'+CAT[p.cat]+'</span>'+
+        '<div class="body"><span class="cat"><span class="ri sm"><svg class="ic"><use href="#i-snow"/></svg></span>'+CAT[p.cat]+'</span>'+
         '<h3>'+(ok?esc(p.name):'Шинэ бараа удахгүй')+'</h3>'+
         (p.desc?'<p class="desc">'+esc(p.desc)+'</p>':'')+
-        '<div class="row"><span class="price">'+(ok?fmt(p.price)+(p.old>p.price?'<s>'+fmt(p.old)+'</s>':''):'Үнэ удахгүй')+'</span>'+
-        '<button class="btn btn-rose js-add" data-id="'+p.id+'" type="button"'+(ok?'':' disabled')+'><svg class="ic"><use href="#i-bag"/></svg>Сагсанд</button></div>'+
+        '<div class="row"><span class="price"><span class="ri sm ice"><svg class="ic"><use href="#i-star"/></svg></span>'+(ok?fmt(p.price)+(p.old>p.price?'<s>'+fmt(p.old)+'</s>':''):'Үнэ удахгүй')+'</span>'+
+        '<button class="btn btn-rose js-add" data-id="'+p.id+'" type="button"'+(ok?'':' disabled')+'><span class="bi"><svg class="ic"><use href="#i-bag"/></svg></span>Сагсанд</button></div>'+
         '</div></article>';
     }).join("");
   }
@@ -419,7 +604,7 @@ var RURAL_FEE = 40000;
       return '<div class="line"><div class="th">'+(l.p.img?'<img src="'+esc(l.p.img)+'" alt="">':'<svg class="ic"><use href="#i-image"/></svg>')+'</div>'+
         '<div><b>'+esc(l.p.name)+'</b><small>'+fmt(l.p.price)+'</small></div>'+
         '<div class="qty"><button type="button" data-q="-1" data-id="'+l.p.id+'" aria-label="Хасах">−</button><span>'+l.q+'</span><button type="button" data-q="1" data-id="'+l.p.id+'" aria-label="Нэмэх">+</button></div></div>';
-    }).join("") : '<div class="empty">Сагс хоосон байна.</div>';
+    }).join("") : '<div class="empty"><span class="ri lg ice"><svg class="ic"><use href="#i-bag"/></svg></span>Сагс хоосон байна.</div>';
   }
   var toast = document.getElementById("toast"), tt;
   grid.addEventListener("click", function(e){
@@ -446,9 +631,9 @@ var RURAL_FEE = 40000;
   function total(){ return subtotal() + (area.value==="rural" ? RURAL_FEE : 0); }
   function itemsText(){ return lines().map(function(l){ return l.p.name+" ×"+l.q+" = "+fmt(l.p.price*l.q); }).join("\n"); }
   function drawSum(){
-    document.getElementById("osum").innerHTML = lines().map(function(l){ return '<div class="sumrow"><span>'+esc(l.p.name)+' ×'+l.q+'</span><b>'+fmt(l.p.price*l.q)+'</b></div>'; }).join("")+
-      '<div class="sumrow"><span>Хүргэлт</span><span>'+(area.value==="rural"?fmt(RURAL_FEE):"Үнэгүй")+'</span></div>'+
-      '<div class="sumrow total"><span>Нийт</span><b>'+fmt(total())+'</b></div>';
+    document.getElementById("osum").innerHTML = lines().map(function(l){ return '<div class="sumrow"><span class="l"><span class="ri sm"><svg class="ic"><use href="#i-bag"/></svg></span>'+esc(l.p.name)+' ×'+l.q+'</span><b>'+fmt(l.p.price*l.q)+'</b></div>'; }).join("")+
+      '<div class="sumrow"><span class="l"><span class="ri sm ice"><svg class="ic"><use href="#i-truck"/></svg></span>Хүргэлт</span><span>'+(area.value==="rural"?fmt(RURAL_FEE):"Үнэгүй")+'</span></div>'+
+      '<div class="sumrow total"><span class="l"><span class="ri sm"><svg class="ic"><use href="#i-bank"/></svg></span>Нийт</span><b>'+fmt(total())+'</b></div>';
   }
   area.addEventListener("change", drawSum);
   document.getElementById("checkoutBtn").addEventListener("click", function(){
@@ -469,7 +654,7 @@ var RURAL_FEE = 40000;
       document.getElementById("formView").hidden=true; document.getElementById("doneView").hidden=false;
       document.getElementById("dTotal").textContent = sum;
       if(!sent){
-        document.getElementById("dTitle").textContent="Захиалгаа бидэнд илгээнэ үү";
+        document.getElementById("dTitle").innerHTML='<span class="ri"><svg class="ic"><use href="#i-phone"/></svg></span>Захиалгаа бидэнд илгээнэ үү';
         document.getElementById("dMsg").textContent="Захиалга автоматаар илгээгдсэнгүй. Доорх мэдээллийг хуулж 8554 4078 дугаарт SMS-ээр эсвэл Facebook / Instagram \"Mila Winter\" руу илгээнэ үү.";
         document.getElementById("fbText").value = text; document.getElementById("fbWrap").hidden=false;
       } else { cart={}; save(); drawCart(); }
