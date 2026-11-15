@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mila Winter</title>
-<meta name="description" content="Mila Winter: өвлийн болон охидын бараа. УБ хүргэлт үнэгүй.">
+<meta name="description" content="Mila Winter: охидын өвлийн бараа. УБ хүргэлт үнэгүй.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -223,7 +223,6 @@ footer small{opacity:.6}
   <a href="#" class="logo"><svg class="ic"><use href="#i-snow"/></svg>Mila <i>Winter</i></a>
   <nav class="nav-links">
     <a href="#shop">Бүтээгдэхүүн</a>
-    <a href="#cats">Ангилал</a>
     <a href="#how">Захиалах заавар</a>
     <a href="#faq">Асуулт</a>
   </nav>
@@ -235,9 +234,9 @@ footer small{opacity:.6}
     <div class="flakes" id="flakes" aria-hidden="true"></div>
     <div class="wrap">
       <div>
-        <span class="eyebrow"><svg class="ic"><use href="#i-sparkle"/></svg>Өвлийн шинэ цуглуулга</span>
+        <span class="eyebrow"><svg class="ic"><use href="#i-sparkle"/></svg>Охидын өвлийн цуглуулга</span>
         <h1>Өвөл ч <em>гоё</em>,<br>дулаахан ч байя</h1>
-        <p class="sub">Өвлийн дулаан бараа, охидын гоё аксессуар нэг дороос. Сонгоод сагсандаа хийгээд захиалаарай.</p>
+        <p class="sub">Охидод зориулсан өвлийн дулаан, гоё бараа нэг дороос. Сонгоод сагсандаа хийгээд захиалаарай.</p>
         <div class="hero-ctas">
           <a href="#shop" class="btn btn-rose">Дэлгүүр үзэх <svg class="ic"><use href="#i-arrow"/></svg></a>
           <a href="#how" class="btn btn-ghost">Яаж захиалах вэ?</a>
@@ -262,28 +261,8 @@ footer small{opacity:.6}
     <div class="wrap">
       <div class="sec-head">
         <div><h2>Бүтээгдэхүүн</h2><p>Шинэ бараа удахгүй нэмэгдэнэ.</p></div>
-        <div class="filters" id="filters">
-          <button class="chip on" data-f="all" type="button">Бүгд</button>
-          <button class="chip" data-f="winter" type="button">Өвлийн бараа</button>
-          <button class="chip" data-f="girls" type="button">Охидын бараа</button>
-        </div>
       </div>
       <div class="grid" id="grid"></div>
-    </div>
-  </section>
-
-  <section class="block" id="cats" style="padding-top:0">
-    <div class="wrap cats">
-      <div class="catbox w">
-        <div><h3>Өвлийн бараа</h3><p>Хүйтэнд дулаан байлгах хэрэгцээт зүйлс.</p></div>
-        <button class="btn btn-ghost js-cat" data-f="winter" type="button">Үзэх <svg class="ic"><use href="#i-arrow"/></svg></button>
-        <svg class="ic deco" aria-hidden="true"><use href="#i-snow"/></svg>
-      </div>
-      <div class="catbox g">
-        <div><h3>Охидын бараа</h3><p>Өдөр бүр гоё харагдах аксессуар, хэрэгсэл.</p></div>
-        <button class="btn btn-ghost js-cat" data-f="girls" type="button">Үзэх <svg class="ic"><use href="#i-arrow"/></svg></button>
-        <svg class="ic deco" aria-hidden="true"><use href="#i-heart"/></svg>
-      </div>
     </div>
   </section>
 
@@ -379,13 +358,13 @@ footer small{opacity:.6}
    БҮТЭЭГДЭХҮҮН — энд л засна.
    name: нэр, price: үнэ (тоо), old: хуучин үнэ (заавал биш),
    img: зургийн зам (жишээ "img/hand-warmer.jpg"),
-   cat: "winter" (өвлийн) эсвэл "girls" (охидын), desc: богино тайлбар.
+   cat: "girls" (өөрчлөх шаардлагагүй), desc: богино тайлбар.
    name хоосон бол "Удахгүй" карт харагдана.
    ========================================================= */
 var PRODUCTS = [
-  {id:"p1", cat:"winter", name:"", price:0, old:0, img:"", desc:""},
-  {id:"p2", cat:"winter", name:"", price:0, old:0, img:"", desc:""},
-  {id:"p3", cat:"winter", name:"", price:0, old:0, img:"", desc:""},
+  {id:"p1", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
+  {id:"p2", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
+  {id:"p3", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
   {id:"p4", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
   {id:"p5", cat:"girls",  name:"", price:0, old:0, img:"", desc:""},
   {id:"p6", cat:"girls",  name:"", price:0, old:0, img:"", desc:""}
@@ -393,7 +372,7 @@ var PRODUCTS = [
 var RURAL_FEE = 40000;
 
 (function(){
-  var CAT = {winter:"Өвлийн бараа", girls:"Охидын бараа"};
+  var CAT = {girls:"Охидын өвлийн бараа"};
   var fmt = function(n){ return "₮" + Number(n||0).toLocaleString("en-US"); };
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); };
   var ready = function(p){ return p.name && p.price > 0; };
@@ -423,9 +402,6 @@ var RURAL_FEE = 40000;
         '</div></article>';
     }).join("");
   }
-  function setFilter(f){ filter=f; document.querySelectorAll("#filters .chip").forEach(function(c){ c.classList.toggle("on", c.dataset.f===f); }); render(); }
-  document.getElementById("filters").addEventListener("click", function(e){ var c=e.target.closest(".chip"); if(c) setFilter(c.dataset.f); });
-  document.querySelectorAll(".js-cat").forEach(function(b){ b.addEventListener("click", function(){ setFilter(b.dataset.f); document.getElementById("shop").scrollIntoView(); }); });
 
   /* cart */
   var cart = {};
